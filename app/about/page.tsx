@@ -1,5 +1,6 @@
 "use client";
 import AboutUs from "@/components/aboutus";
+import BeTheChangeSection from "@/components/beTheChange";
 import React from "react";
 
 // Custom icon components using SVG
@@ -192,58 +193,7 @@ const FeatureCards: React.FC = () => {
   return (
     <div className="bg-white py-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-[48px] text-black font-bold mb-4">
-            Be The <span className="text-[#1A73E8]">Change</span>
-          </h2>
-          <p className="text-[18px] text-[#475467] max-w-[768px] mx-auto">
-            Mattis et aliquam fermentum sed sagittis eu ellit mauris. Nisi eros
-            vel neque vitae lorem molestie.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={feature.title}
-              className={`
-                rounded-[16px] border p-6 text-center transition-all duration-300 
-                ${
-                  feature.bgColor ||
-                  "bg-white border-gray-200 hover:border-[#1A73E8]/20"
-                }
-                ${feature.shadow || "hover:shadow-lg"}
-                ${feature.borderColor || "border"}
-              `}>
-              <div className="flex justify-center mb-6">{feature.icon}</div>
-              <h3
-                className={`text-[20px] font-semibold mb-4 ${
-                  feature.color || "text-[#101828]"
-                }`}>
-                {feature.title}
-              </h3>
-              <p
-                className={`text-[16px] mb-6 ${
-                  feature.color === "text-white"
-                    ? "text-white/80"
-                    : "text-[#475467]"
-                }`}>
-                {feature.description}
-              </p>
-              <button
-                className={`
-                  px-5 py-2 rounded-[8px] text-[16px] font-semibold transition-all duration-300
-                  ${
-                    feature.bgColor
-                      ? "text-white border border-white/20 hover:bg-white/10"
-                      : "text-[#1A73E8] border border-[#1A73E8]/20 hover:bg-[#1A73E8]/10"
-                  }
-                `}>
-                Learn More
-              </button>
-            </div>
-          ))}
-        </div>
+       <BeTheChangeSection/>
         <AboutUs />
       </div>
     </div>
