@@ -21,7 +21,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex space-x-8 items-center">
-          {["Home", "About", "Donation", "Blog", "Contact"].map((item) => (
+          {["Home", "About", "Donation", "Blog", ].map((item) => (
             <Link key={item} href={`/${item.toLowerCase()}`}>
               <span
                 className={`text-gray-700 hover:text-[#0052cc] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
@@ -80,7 +80,7 @@ export default function Navbar() {
       }`}
     >
       <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        {["Home", "About", "Donation", "Blog", "Contact"].map((item) => (
+        {["Home", "About", "Donation", "Blog"].map((item) => (
           <Link key={item} href={`/${item.toLowerCase()}`}>
             <span
               className={`block text-gray-700 hover:text-[#0052cc] px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 ${
