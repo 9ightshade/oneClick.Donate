@@ -1,6 +1,7 @@
 // components/Navbar.js
 "use client";
 import Link from "next/link";
+import { UserButton } from "@civic/auth-web3/react";
 import { useState, useEffect } from "react";
 
 export default function NavBar() {
@@ -48,6 +49,7 @@ export default function NavBar() {
             </span>
             <span className="text-black font-bold text-2xl tracking-tight transition-all duration-300">
               .donate
+              <UserButton/>
             </span>
           </Link>
         </div>
