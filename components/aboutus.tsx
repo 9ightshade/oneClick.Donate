@@ -1,15 +1,21 @@
-import Image from 'next/image'
-import { HeartIcon, LightBulbIcon, UserGroupIcon } from '@heroicons/react/24/solid'
-import hand from '@/public/donate.png'
+import Image from "next/image";
+import {
+  HeartIcon,
+  LightBulbIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
+import hand from "@/public/donate.png";
 export default function SupportSection() {
   return (
     <section className="bg-white py-12 px-4 md:px-8">
       {/* Header */}
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:justify-between">
         <div className="flex-1">
-          <p className="text-xs text-blue-600 font-bold tracking-widest uppercase mb-2">About Us</p>
+          <p className="text-xs text-blue-600 font-bold tracking-widest uppercase mb-2">
+            About Us
+          </p>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            We are here to support{' '}
+            We are here to support{" "}
             <span className="text-blue-600">vulnerable</span> communities.
           </h1>
         </div>
@@ -37,22 +43,22 @@ export default function SupportSection() {
           <CategoryCard
             icon={<HeartIcon className="w-8 h-8 text-white" />}
             title="Category 1"
-            description="Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisi eros vel neque vitae lorem molestie."
+            description="This group generally focuses on the immediate physical well-being and health of children. Think of it as addressing their most urgent needs related to being healthy and safe."
           />
           <CategoryCard
             icon={<LightBulbIcon className="w-8 h-8 text-white" />}
             title="Category 2"
-            description="Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisi eros vel neque vitae lorem molestie."
+            description="This category is centered around nurturing the intellectual and creative development of children. It's about providing opportunities for learning, growth, and self-expression."
           />
           <CategoryCard
             icon={<UserGroupIcon className="w-8 h-8 text-white" />}
             title="Category 3"
-            description="Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisi eros vel neque vitae lorem molestie."
+            description="This area emphasizes the safety, security, and overall welfare of children in their environment and social circumstances. It's about ensuring they have stable and supportive surroundings."
           />
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 interface CategoryCardProps {
@@ -68,9 +74,11 @@ function CategoryCard({ icon, title, description }: CategoryCardProps) {
         {icon}
       </div>
       <div>
-        <h3 className="font-bold text-gray-900 text-lg mb-1 uppercase">{title}</h3>
+        <h3 className="font-bold text-gray-900 text-lg mb-1 uppercase">
+          {title}
+        </h3>
         <p className="text-gray-500 text-sm">{description}</p>
       </div>
     </div>
-  )
+  );
 }

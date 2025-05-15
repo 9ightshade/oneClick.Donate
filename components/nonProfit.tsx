@@ -60,8 +60,7 @@ export default function NonprofitTemplate() {
                 CATEGORY 1
               </h3>
               <p className="text-gray-600 text-sm">
-                Mattis et aliquam fermentum sed sagittis eu elit mattis. Nisi
-                eros vel neque vitae lorem molestia.
+              This group generally focuses on the immediate physical well-being and health of children. Think of it as addressing their most urgent needs related to being healthy and safe.
               </p>
             </div>
           </div>
@@ -82,8 +81,7 @@ export default function NonprofitTemplate() {
                 CATEGORY 2
               </h3>
               <p className="text-gray-600 text-sm">
-                Mattis et aliquam fermentum sed sagittis eu elit mattis. Nisi
-                eros vel neque vitae lorem molestia.
+              This category is centered around nurturing the intellectual and creative development of children. It's about providing opportunities for learning, growth, and self-expression.
               </p>
             </div>
           </div>
@@ -109,8 +107,7 @@ export default function NonprofitTemplate() {
                 CATEGORY 3
               </h3>
               <p className="text-gray-600 text-sm">
-                Mattis et aliquam fermentum sed sagittis eu elit mattis. Nisi
-                eros vel neque vitae lorem molestia.
+              This area emphasizes the safety, security, and overall welfare of children in their environment and social circumstances. It&apos;s about ensuring they have stable and supportive surroundings.
               </p>
             </div>
           </div>

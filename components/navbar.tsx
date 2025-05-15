@@ -1,14 +1,35 @@
 "use client";
 
-import { useUser } from "@civic/auth-web3/react";
+import { useUser, useWallet } from "@civic/auth-web3/react";
 import Link from "next/link";
 import { useCallback, useState, useEffect } from "react";
+import { userHasWallet, Web3UserContextType } from "@civic/auth-web3";
+import Image from "next/image";
 
 export default function NavBar() {
   const [active, setActive] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { signIn, signOut, user } = useUser();
+
+  const userContext: Web3UserContextType = useUser();
+  const wallet = useWallet({
+    type: "solana",
+  });
+  useEffect(() => {
+    console.log("This user logged in ", user);
+    console.log("wallet:", wallet);
+
+    if (!userContext.user) {
+      console.log("User is not logged in");
+    }
+
+    if (user && !userHasWallet(userContext)) {
+      userContext.createWallet();
+    } else {
+      console.log("User has a wallet");
+    }
+  }, [user, userContext, wallet]);
 
   const doSignIn = useCallback(() => {
     console.log("Starting sign-in process");
@@ -114,13 +135,24 @@ export default function NavBar() {
             </button>
           )}
 
-          {user && <p className="text-blue-500 font-bold">{user.name}</p>}
           {user && (
-            <button
-              onClick={doSignOut}
-              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
-              Sign out
-            </button>
+            <div className="flex items-center space-x-3" >
+              <button
+                onClick={doSignOut}
+                className="px-4 py-2 bg-blue-500 text-white flex items-center gap-2 rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+                <Image
+                  src={user.picture || "@/public/person.png"}
+                  alt="User Avatar"
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+                Sign out
+              </button>
+              <p className="text-gray-600 text-center">
+                {wallet?.address?.slice(0, 8) + "..."}
+              </p>
+            </div>
           )}
         </div>
 
@@ -171,7 +203,7 @@ export default function NavBar() {
             </a>
           ))}
           <div className="pt-4 flex flex-col space-y-2">
-        
+         
           {!user && (
             <button
               onClick={doSignIn}
@@ -180,15 +212,26 @@ export default function NavBar() {
             </button>
           )}
 
-          {user && <p className="text-blue-500 font-bold">{user.name}</p>}
           {user && (
-            <button
-              onClick={doSignOut}
-              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
-              Sign out
-            </button>
+            <div>
+              <button
+                onClick={doSignOut}
+                className="px-4 py-2 bg-blue-500 text-white flex items-center gap-2 rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+                <Image
+                  src={user.picture || "@/public/person.png"}
+                  alt="User Avatar"
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+                Sign out
+              </button>
+              <p className="text-gray-600 py-1">
+                {wallet?.address?.slice(0, 8) + "..."}
+              </p>
+            </div>
           )}
-     
+       
           </div>
         </div>
       </div>

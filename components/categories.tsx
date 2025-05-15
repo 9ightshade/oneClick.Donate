@@ -13,31 +13,67 @@ const categories = [
 const cards = [
   {
     id: 1,
-    category: "Category 1",
-    title: "Ensuring medicine for all the children.",
+    category: "Category 1", // Children's Health
+    title: "Providing life-saving medicine for children.",
     image: kids,
-    progress: 50,
+    progress: 78,
+    description: "Your donation ensures that sick children receive the critical medication they urgently need.",
   },
   {
     id: 2,
-    category: "Category 1",
-    title: "Ensuring medicine for all the children.",
+    category: "Category 2", // Children's Education
+    title: "Empowering young minds with quality education.",
     image: kids,
-    progress: 66,
+    progress: 35,
+    description: "Help us provide school supplies, resources, and support for children to learn and grow.",
   },
   {
     id: 3,
-    category: "Category 2",
-    title: "Ensuring medicine for all the children.",
+    category: "Category 3", // Child Welfare
+    title: "Creating safe homes for vulnerable children.",
     image: kids,
-    progress: 43,
+    progress: 62,
+    description: "Support our efforts to provide shelter and care for children in unsafe or unstable situations.",
   },
   {
     id: 4,
-    category: "Category 2",
-    title: "Ensuring medicine for all the children.",
+    category: "Category 3", // Children's Nutrition (shifted for balance)
+    title: "Ensuring nutritious meals for growing children.",
     image: kids,
-    progress: 43,
+    progress: 92,
+    description: "Help us fight child hunger by providing access to healthy and nourishing food.",
+  },
+  {
+    id: 5,
+    category: "Category 1", // Children's Health
+    title: "Supporting vital vaccinations for children's well-being.",
+    image: kids,
+    progress: 48,
+    description: "Your contribution helps protect children from preventable diseases through essential vaccinations.",
+  },
+  {
+    id: 6,
+    category: "Category 2", // Children's Education
+    title: "Fostering creativity through arts programs for kids.",
+    image: kids,
+    progress: 21,
+    description: "Help us fund art, music, and other creative outlets that enrich children's development.",
+  },
+  {
+    id: 7,
+    category: "Category 3", // Child Welfare
+    title: "Providing mentorship and guidance for at-risk youth.",
+    image: kids,
+    progress: 71,
+    description: "Support our mentorship programs that offer guidance and positive role models for young people.",
+  },
+  {
+    id: 8,
+    category: "Category 1", // Children's Nutrition (shifted for balance)
+    title: "Establishing school gardens for sustainable nutrition.",
+    image: kids,
+    progress: 59,
+    description: "Help us create school gardens that teach children about healthy eating and provide fresh produce.",
   },
 ];
 
@@ -57,8 +93,7 @@ export default function CategoriesSection() {
           Help us <span className="text-blue-600">save</span> the world
         </h2>
         <p className="text-gray-500 mb-8">
-          Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisi eros vel
-          neque vitae lorem molestie.
+        Be the spark that ignites change – your support fuels our mission and transforms lives.
         </p>
       </div>
       {/* Categories Tabs */}
@@ -68,7 +103,7 @@ export default function CategoriesSection() {
             <button
               key={cat.label}
               onClick={() => setSelected(cat.label)}
-              className={`relative pb-2 transition-colors ${
+              className={`relative pb-2 transition-colors cursor-pointer ${
                 selected === cat.label
                   ? "text-blue-600"
                   : "text-gray-700 hover:text-blue-600"
@@ -117,7 +152,7 @@ export default function CategoriesSection() {
                 </span>
               </div>
               {/* Button */}
-              <button className="w-full border border-blue-600 text-blue-600 font-medium rounded-full py-2 transition hover:bg-blue-600 hover:text-white">
+              <button className="w-full cursor-pointer border border-blue-600 text-blue-600 font-medium rounded-full py-2 transition hover:bg-blue-600 hover:text-white">
                 Donate Now
               </button>
             </div>

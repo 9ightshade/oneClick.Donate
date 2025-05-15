@@ -8,7 +8,7 @@ export default function CharityTemplate() {
           Be The <span className="text-blue-500">Change</span>
         </h1>
         <p className="mt-4 text-gray-500 max-w-xl mx-auto">
-          Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisl eros vel neque vitae lorem moestie.
+        Planting Seeds of Change, Cultivating a Brighter Future
         </p>
       </div>
 
@@ -22,7 +22,7 @@ export default function CharityTemplate() {
           </div>
           <h3 className="text-xl font-semibold text-blue-500 mb-2">Help</h3>
           <p className="text-gray-500 text-sm mb-6">
-            Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisl eros vel neque vitae lorem moestie.
+          At the heart of our mission lies a simple yet powerful belief: that collective generosity, no matter the size, can blossom into extraordinary impact. We are a dedicated platform connecting compassionate individuals like you with vital causes that uplift and empower. We believe in transparency, ensuring you see firsthand how your contributions are making a tangible difference in the lives of those who need it most.
           </p>
           <button className="mt-auto border border-blue-500 text-blue-500 rounded-md px-4 py-2 text-sm hover:bg-blue-50 transition-colors">
             Learn More
@@ -42,7 +42,7 @@ export default function CharityTemplate() {
           </div>
           <h3 className="text-xl font-semibold text-white mb-2">Donation</h3>
           <p className="text-blue-100 text-sm mb-6">
-            Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisl eros vel neque vitae lorem moestie.
+          From ensuring access to life-saving medicine for vulnerable children and fostering quality education to providing safe havens and nourishing meals, we strive to support initiatives that create lasting positive change. Our platform simplifies the giving process, making it easy and secure for you to connect with the causes that resonate with your values. We provide regular updates and heartfelt stories, allowing you to witness the ripple effect of your kindness.
           </p>
           <button className="mt-auto border border-white text-white rounded-md px-4 py-2 text-sm hover:bg-blue-400 transition-colors">
             Learn More
@@ -59,7 +59,7 @@ export default function CharityTemplate() {
           </div>
           <h3 className="text-xl font-semibold text-blue-500 mb-2">Volunteer</h3>
           <p className="text-gray-500 text-sm mb-6">
-            Mattis et aliquam fermentum sed sagittis eu elit mauris. Nisl eros vel neque vitae lorem moestie.
+          Volunteering isn&apos;t just about giving back; it&apos;s about becoming an integral part of the change, connecting with our cause on a deeper level, and witnessing the transformative power of collective action firsthand. Join our vibrant community of dedicated individuals, discover your unique contribution, and experience the profound fulfillment of making a tangible difference with your time.
           </p>
           <button className="mt-auto border border-blue-500 text-blue-500 rounded-md px-4 py-2 text-sm hover:bg-blue-50 transition-colors">
             Learn More
