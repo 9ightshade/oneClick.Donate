@@ -1,7 +1,6 @@
-// components/Navbar.js
 "use client";
 
-import { useUser, UserButton } from "@civic/auth-web3/react";
+import { useUser } from "@civic/auth-web3/react";
 import Link from "next/link";
 import { useCallback, useState, useEffect } from "react";
 
@@ -16,12 +15,11 @@ export default function NavBar() {
     signIn()
       .then(() => {
         console.log("Sign-in completed successfully");
-        console.log("User data:", user);
       })
       .catch((error) => {
         console.error("Sign-in failed:", error);
       });
-  }, [signIn, user]);
+  }, [signIn]);
 
   const doSignOut = useCallback(() => {
     console.log("Starting sign-out process");
@@ -78,7 +76,7 @@ export default function NavBar() {
           </Link>
         </div>
 
-        {/* Desktop Navigation with improved hover effects */}
+        {/* Desktop Navigation*/}
         <div className="hidden md:flex items-center space-x-8">
           {["Home", "About", "Donation"].map((item) => (
             <Link
