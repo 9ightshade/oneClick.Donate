@@ -1,13 +1,38 @@
 // components/Navbar.js
 "use client";
+
+import { useUser, UserButton } from "@civic/auth-web3/react";
 import Link from "next/link";
-import { UserButton } from "@civic/auth-web3/react";
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 export default function NavBar() {
-  const [active, setActive] = useState("Blog");
+  const [active, setActive] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { signIn, signOut, user } = useUser();
+
+  const doSignIn = useCallback(() => {
+    console.log("Starting sign-in process");
+    signIn()
+      .then(() => {
+        console.log("Sign-in completed successfully");
+        console.log("User data:", user);
+      })
+      .catch((error) => {
+        console.error("Sign-in failed:", error);
+      });
+  }, [signIn, user]);
+
+  const doSignOut = useCallback(() => {
+    console.log("Starting sign-out process");
+    signOut()
+      .then(() => {
+        console.log("Sign-out completed successfully");
+      })
+      .catch((error) => {
+        console.error("Sign-out failed:", error);
+      });
+  }, [signOut]);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -49,7 +74,6 @@ export default function NavBar() {
             </span>
             <span className="text-black font-bold text-2xl tracking-tight transition-all duration-300">
               .donate
-              <UserButton/>
             </span>
           </Link>
         </div>
@@ -84,16 +108,22 @@ export default function NavBar() {
 
         {/* Sign In and Sign Up buttons with improved hover effects */}
         <div className="hidden md:flex items-center space-x-3">
-          <a
-            href="/signin"
-            className="px-4 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
-            Sign in
-          </a>
-          <a
-            href="/signup"
-            className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
-            Sign up
-          </a>
+          {!user && (
+            <button
+              onClick={doSignIn}
+              className="px-4 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+              Login / Sign up
+            </button>
+          )}
+
+          {user && <p className="text-blue-500 font-bold">{user.name}</p>}
+          {user && (
+            <button
+              onClick={doSignOut}
+              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+              Sign out
+            </button>
+          )}
         </div>
 
         {/* Mobile menu button with animation */}
@@ -126,7 +156,7 @@ export default function NavBar() {
           mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}>
         <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-          {["Home", "About", "Donation", "Blog", "Contact"].map((item) => (
+          {["Home", "About", "Donation"].map((item) => (
             <a
               key={item}
               href={`/${item.toLowerCase()}`}
@@ -143,16 +173,24 @@ export default function NavBar() {
             </a>
           ))}
           <div className="pt-4 flex flex-col space-y-2">
-            <a
-              href="/signin"
-              className="px-4 py-2 text-center border border-blue-500 text-blue-500 rounded-full hover:bg-blue-50 hover:shadow-sm transition-all duration-300">
-              Sign in
-            </a>
-            <a
-              href="/signup"
-              className="px-4 py-2 text-center bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:shadow-sm transition-all duration-300">
-              Sign up
-            </a>
+        
+          {!user && (
+            <button
+              onClick={doSignIn}
+              className="px-4 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+              Login / Sign up
+            </button>
+          )}
+
+          {user && <p className="text-blue-500 font-bold">{user.name}</p>}
+          {user && (
+            <button
+              onClick={doSignOut}
+              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+              Sign out
+            </button>
+          )}
+     
           </div>
         </div>
       </div>
