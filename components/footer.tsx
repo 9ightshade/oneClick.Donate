@@ -20,7 +20,7 @@ export default function Footer() {
             Be A Part Of Our Journey
           </h1>
           <p className="text-white text-base md:text-lg mb-8">
-          "We make a living by what we get, but we make a life by what we give." - Winston Churchill
+          &quot;We make a living by what we get, but we make a life by what we give.&quot; - Winston Churchill
           </p>
           <form className="flex flex-col sm:flex-row gap-4">
             <input

@@ -81,7 +81,7 @@ export default function NonprofitTemplate() {
                 CATEGORY 2
               </h3>
               <p className="text-gray-600 text-sm">
-              This category is centered around nurturing the intellectual and creative development of children. It's about providing opportunities for learning, growth, and self-expression.
+              This category is centered around nurturing the intellectual and creative development of children. It&apos;s about providing opportunities for learning, growth, and self-expression.
               </p>
             </div>
           </div>

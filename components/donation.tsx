@@ -16,10 +16,6 @@ export default function DonationPage() {
     console.log("Donation Type:", donationType);
     console.log("Custom Amount:", customAmount);
     setCustomAmount("");
-
-    // Here you would typically call your backend API to process the donation
-    // For example:
-    // await api.sendDonation({ type: donationType, amount: customAmount });
   };
 
   return (
