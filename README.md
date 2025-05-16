@@ -2,8 +2,7 @@
 
 ## Project Overview
 
-[Provide a concise description of your donation web application. What problem does it solve? Who is it for? What are its key features beyond authentication?]
-
+A web app for charitable donations, featuring secure Civic Auth login and embedded wallets for simplified giving.
 This project integrates Civic Auth to provide a simple and secure authentication experience for users, leveraging embedded wallets to potentially streamline cryptocurrency donations.
 
 ## Civic Auth Integration
@@ -92,20 +91,7 @@ This section outlines the key steps taken to integrate Civic Auth into this appl
 
 ## Further Development
 
-[Optional: Briefly mention any planned future features or improvements related to Civic Auth or the donation functionality.]
-
 ## Contributing
 
-[Optional: If you're open to contributions, explain how others can contribute to your project.]
-
 ## License
-
-[Optional: Include a license for your project.]
-
-## Acknowledgements
-
-[Optional: Mention any libraries, frameworks, or resources you found particularly helpful.]
-
 ---
-
-**Remember to replace the bracketed placeholders with your specific project details and code snippets.** This README provides a good starting point for documenting your Civic Auth integration and embedded wallet usage for the hackathon. Good luck with your submission!

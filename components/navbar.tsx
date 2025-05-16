@@ -201,7 +201,7 @@ export default function NavBar() {
               <button
                 onClick={doSignIn}
                 disabled={isLoading}
-                className="px-5 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 disabled:opacity-70">
+                className="px-5 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 disabled:opacity-70 cursor-pointer ">
                 {isLoading ? (
                   <span className="flex items-center">
                     <svg
@@ -239,7 +239,7 @@ export default function NavBar() {
                 <button
                   onClick={doSignOut}
                   disabled={isLoading}
-                  className="px-5 py-2 bg-blue-500 text-white flex items-center gap-2 rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 disabled:opacity-70">
+                  className="px-5 py-2 bg-blue-500 text-white flex items-center gap-2 rounded-full hover:bg-blue-600 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 disabled:opacity-70 cursor-pointer ">
                   {user.picture ? (
                     <Image
                       src={user.picture}
@@ -261,7 +261,7 @@ export default function NavBar() {
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition-colors duration-300 p-2 rounded-md"
+              className="text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition-colors duration-300 p-2 rounded-md cursor-pointer "
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}>
@@ -316,7 +316,7 @@ export default function NavBar() {
               <button
                 onClick={doSignIn}
                 disabled={isLoading}
-                className="w-full px-4 py-3 flex justify-center items-center border border-blue-500 text-blue-500 font-medium rounded-lg hover:bg-blue-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-70">
+                className="w-full px-4 py-3 flex justify-center items-center border border-blue-500 text-blue-500 font-medium rounded-lg hover:bg-blue-50 transition-all duration-300 focus:outline-none cursor-pointer focus:ring-2 focus:ring-blue-300 disabled:opacity-70">
                 {isLoading ? (
                   <span className="flex items-center">
                     <svg
@@ -354,7 +354,7 @@ export default function NavBar() {
                 <button
                   onClick={doSignOut}
                   disabled={isLoading}
-                  className="w-full px-4 py-3 bg-blue-500 text-white flex items-center justify-center gap-2 rounded-lg hover:bg-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-70">
+                  className="w-full px-4 py-3 bg-blue-500 text-white flex items-center justify-center gap-2 rounded-lg hover:bg-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 cursor-pointer disabled:opacity-70">
                   {user.picture ? (
                     <Image
                       src={user.picture}
