@@ -17,7 +17,8 @@ const cards = [
     title: "Providing life-saving medicine for children.",
     image: kids,
     progress: 78,
-    description: "Your donation ensures that sick children receive the critical medication they urgently need.",
+    description:
+      "Your donation ensures that sick children receive the critical medication they urgently need.",
   },
   {
     id: 2,
@@ -25,7 +26,8 @@ const cards = [
     title: "Empowering young minds with quality education.",
     image: kids,
     progress: 35,
-    description: "Help us provide school supplies, resources, and support for children to learn and grow.",
+    description:
+      "Help us provide school supplies, resources, and support for children to learn and grow.",
   },
   {
     id: 3,
@@ -33,7 +35,8 @@ const cards = [
     title: "Creating safe homes for vulnerable children.",
     image: kids,
     progress: 62,
-    description: "Support our efforts to provide shelter and care for children in unsafe or unstable situations.",
+    description:
+      "Support our efforts to provide shelter and care for children in unsafe or unstable situations.",
   },
   {
     id: 4,
@@ -41,7 +44,8 @@ const cards = [
     title: "Ensuring nutritious meals for growing children.",
     image: kids,
     progress: 92,
-    description: "Help us fight child hunger by providing access to healthy and nourishing food.",
+    description:
+      "Help us fight child hunger by providing access to healthy and nourishing food.",
   },
   {
     id: 5,
@@ -49,7 +53,8 @@ const cards = [
     title: "Supporting vital vaccinations for children's well-being.",
     image: kids,
     progress: 48,
-    description: "Your contribution helps protect children from preventable diseases through essential vaccinations.",
+    description:
+      "Your contribution helps protect children from preventable diseases through essential vaccinations.",
   },
   {
     id: 6,
@@ -57,7 +62,8 @@ const cards = [
     title: "Fostering creativity through arts programs for kids.",
     image: kids,
     progress: 21,
-    description: "Help us fund art, music, and other creative outlets that enrich children's development.",
+    description:
+      "Help us fund art, music, and other creative outlets that enrich children's development.",
   },
   {
     id: 7,
@@ -65,7 +71,8 @@ const cards = [
     title: "Providing mentorship and guidance for at-risk youth.",
     image: kids,
     progress: 71,
-    description: "Support our mentorship programs that offer guidance and positive role models for young people.",
+    description:
+      "Support our mentorship programs that offer guidance and positive role models for young people.",
   },
   {
     id: 8,
@@ -73,12 +80,30 @@ const cards = [
     title: "Establishing school gardens for sustainable nutrition.",
     image: kids,
     progress: 59,
-    description: "Help us create school gardens that teach children about healthy eating and provide fresh produce.",
+    description:
+      "Help us create school gardens that teach children about healthy eating and provide fresh produce.",
   },
 ];
 
 export default function CategoriesSection() {
   const [selected, setSelected] = useState("All");
+  const [donationType, setDonationType] = useState<"one-time" | "weekly">(
+    "one-time"
+  );
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [customAmount, setCustomAmount] = useState<string>("");
+
+  const predefinedAmounts = [500, 1000, 2000, 5000, 10000, 50000];
+
+  const sendFunds = () => {
+    // Logic to send funds
+    console.log("Sending funds...");
+    console.log("Donation Type:", donationType);
+    console.log("Custom Amount:", customAmount);
+    setCustomAmount("");
+    setModalIsOpen(!modalIsOpen);
+    console.log(modalIsOpen);
+  };
 
   const filteredCards =
     selected === "All"
@@ -86,18 +111,77 @@ export default function CategoriesSection() {
       : cards.filter((card) => card.category === selected);
 
   return (
-    <section className="w-full bg-white py-12 px-4">
+    <section className="w-full bg-white py-12 px-4 ">
       {/* Header */}
       <div className="max-w-4xl mx-auto text-center text-black">
         <h2 className="text-3xl md:text-4xl font-bold mb-2">
           Help us <span className="text-blue-600">save</span> the world
         </h2>
         <p className="text-gray-500 mb-8">
-        Be the spark that ignites change – your support fuels our mission and transforms lives.
+          Be the spark that ignites change – your support fuels our mission and
+          transforms lives.
         </p>
       </div>
       {/* Categories Tabs */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-4xl mx-auto mb-8  relative ">
+        {/* donation modal */}
+
+        {
+          modalIsOpen && <div className="bg-white rounded-[16px] shadow-2xl p-6 max-w-[480px] mx-auto  absolute left-1/3 top-1/4 z-10">
+          <div className="flex space-x-2 bg-gray-100 rounded-full p-1 mb-6 ">
+            <button
+              onClick={() => setDonationType("one-time")}
+              className={`flex-1 py-2 rounded-full text-[14px] cursor-pointer font-semibold transition-all duration-300 ${
+                donationType === "one-time"
+                  ? "bg-[#1A73E8] text-white shadow-md"
+                  : "text-[#344054] hover:bg-gray-200"
+              }`}>
+              One-time
+            </button>
+            <button
+              onClick={() => setDonationType("weekly")}
+              className={`flex-1 py-2 rounded-full text-[14px] cursor-pointer font-semibold transition-all duration-300 ${
+                donationType === "weekly"
+                  ? "bg-[#1A73E8] text-white shadow-md"
+                  : "text-[#344054] hover:bg-gray-200"
+              }`}>
+              Weekly
+            </button>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 mb-4">
+            {predefinedAmounts.map((amount) => (
+              <button
+                key={amount}
+                onClick={() => setCustomAmount(amount.toString())}
+                className={`py-2 rounded-lg text-[14px] font-semibold cursor-pointer transition-all duration-300 ${
+                  customAmount === amount.toString()
+                    ? "bg-[#1A73E8] text-white shadow-md"
+                    : "bg-gray-100 text-[#344054] hover:bg-blue-100 hover:text-[#1A73E8]"
+                }`}>
+                ${amount}
+              </button>
+            ))}
+          </div>
+
+          <input
+            type="text"
+            placeholder="Custom Amount"
+            value={customAmount}
+            onChange={(e) => setCustomAmount(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-[8px] text-[14px] focus:outline-none focus:ring-2 focus:ring-[#1A73E8] focus:border-transparent text-[#1A73E8]"
+          />
+
+          <button
+            className="w-full bg-[#1A73E8] text-white py-3 cursor-pointer mt-4 rounded-[8px] text-[16px] font-semibold hover:bg-[#1660C4] transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+            onClick={() => sendFunds()}>
+            DONATE NOW
+          </button>
+        </div>
+        }
+
+        {/* donation modal ends  */}
+
         <div className="flex flex-wrap gap-6 md:gap-10 font-medium items-center">
           {categories.map((cat) => (
             <button
@@ -152,7 +236,7 @@ export default function CategoriesSection() {
                 </span>
               </div>
               {/* Button */}
-              <button className="w-full cursor-pointer border border-blue-600 text-blue-600 font-medium rounded-full py-2 transition hover:bg-blue-600 hover:text-white">
+              <button className="w-full cursor-pointer border border-blue-600 text-blue-600 font-medium rounded-full py-2 transition hover:bg-blue-600 hover:text-white" onClick={sendFunds} >
                 Donate Now
               </button>
             </div>
