@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import type { StaticImageData } from "next/image";
 import kids from "@/public/kids.png";
+import { useCallback } from "react";
 
 // Define types for better code organization
 type Category = {
@@ -135,6 +136,19 @@ export default function CategoriesSection() {
   // Predefined donation amounts
   const predefinedAmounts = [500, 1000, 2000, 5000, 10000, 50000];
 
+  const closeModal = useCallback(() => {
+    if (!isSubmitting) {
+      setModalIsOpen(false);
+      setShowSuccess(false);
+
+      // Reset after animation completes
+      setTimeout(() => {
+        setCustomAmount("");
+        setSelectedAmount(null);
+      }, 300);
+    }
+  }, [isSubmitting]);
+
   // Handle outside clicks for modal
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -157,7 +171,7 @@ export default function CategoriesSection() {
       document.removeEventListener("mousedown", handleClickOutside);
       document.body.style.overflow = "unset";
     };
-  }, [modalIsOpen]);
+  }, [modalIsOpen, closeModal]);
 
   // Handle escape key for modal
   useEffect(() => {
@@ -174,7 +188,7 @@ export default function CategoriesSection() {
     return () => {
       document.removeEventListener("keydown", handleEscapeKey);
     };
-  }, [modalIsOpen]);
+  }, [modalIsOpen, closeModal]);
 
   const openModal = (card: Card): void => {
     setSelectedCard(card);
@@ -182,19 +196,6 @@ export default function CategoriesSection() {
     // Reset form state
     setCustomAmount("");
     setSelectedAmount(null);
-  };
-
-  const closeModal = () => {
-    if (!isSubmitting) {
-      setModalIsOpen(false);
-      setShowSuccess(false);
-
-      // Reset after animation completes
-      setTimeout(() => {
-        setCustomAmount("");
-        setSelectedAmount(null);
-      }, 300);
-    }
   };
 
   const handleAmountSelect = (amount: number) => {
