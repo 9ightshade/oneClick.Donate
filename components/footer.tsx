@@ -1,109 +1,284 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { Facebook, Youtube, Twitter } from "lucide-react";
+import {
+  Facebook,
+  Youtube,
+  Twitter,
+  Instagram,
+  Mail,
+  ArrowRight,
+} from "lucide-react";
 import delivery from "@/public/person.png";
+import Link from "next/link";
+
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState({ message: "", type: "" });
 
-  const handleSubmit = () => {
-    alert(`Email submitted: ${email}`);
-    setEmail("");
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    // Basic email validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setFormStatus({
+        message: "Please enter a valid email address",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setFormStatus({ message: "Thank you for subscribing!", type: "success" });
+      setEmail("");
+      setIsSubmitting(false);
+
+      // Auto-clear success message after 3 seconds
+      setTimeout(() => {
+        setFormStatus({ message: "", type: "" });
+      }, 3000);
+    }, 1000);
   };
+
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = [
+    { name: "About Us", href: "/about" },
+    { name: "Our Mission", href: "/mission" },
+    { name: "Donate", href: "/donate" },
+    { name: "Impact Stories", href: "/stories" },
+    { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  const socialLinks = [
+    { icon: <Facebook size={20} />, href: "#", label: "Facebook" },
+    { icon: <Twitter size={20} />, href: "#", label: "Twitter" },
+    { icon: <Instagram size={20} />, href: "#", label: "Instagram" },
+    { icon: <Youtube size={20} />, href: "#", label: "YouTube" },
+    { icon: <Mail size={20} />, href: "#", label: "Email" },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-[#5B8DF6]">
-      {/* Hero Section */}
-      <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-24 py-16 md:py-24">
-        {/* Left: Text */}
-        <div className="w-full md:w-1/2 mb-12 md:mb-0">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Be A Part Of Our Journey
-          </h1>
-          <p className="text-white text-base md:text-lg mb-8">
-          &quot;We make a living by what we get, but we make a life by what we give.&quot; - Winston Churchill
-          </p>
-          <form className="flex flex-col sm:flex-row gap-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-4 py-3 rounded-md text-gray-800 outline-none bg-white w-full sm:w-64"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button
-              onClick={handleSubmit}
-              className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 cursor-pointer transition-colors">
-              Submit
-            </button>
-          </form>
-        </div>
-        {/* Right: Image */}
-        <div className="w-full md:w-1/2 flex justify-center">
-          <div className="relative w-64 h-64 rounded-full bg-blue-200 flex items-center justify-center shadow-lg">
-            <Image
-              src={delivery}
-              alt="Delivery"
-              width={220}
-              height={260}
-              className="rounded-lg object-cover"
-              priority
-            />
+    <div className="flex flex-col bg-gradient-to-br from-blue-500 to-blue-600">
+      {/* Hero CTA Section */}
+      <div className="px-6 md:px-12 lg:px-24 py-16 md:py-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+            {/* Left: Text Content */}
+            <div className="w-full md:w-1/2 space-y-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+                Join Our Community{" "}
+                <span className="text-yellow-300">Today</span>
+              </h2>
+              <p className="text-white text-base md:text-lg opacity-90 max-w-md">
+                &quot;We make a living by what we get, but we make a life by
+                what we give.&quot;
+                <span className="block mt-2 italic">- Winston Churchill</span>
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+                <div className="relative">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    className="w-full px-4 py-3 pr-12 rounded-lg bg-white text-gray-800 outline-none focus:ring-2 focus:ring-yellow-300 transition-all duration-200"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    aria-label="Email address"
+                    disabled={isSubmitting}
+                  />
+                  <button
+                    type="submit"
+                    className={`absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 rounded-md p-2 ${
+                      isSubmitting
+                        ? "bg-gray-200"
+                        : "bg-blue-600 hover:bg-blue-700"
+                    } text-white transition-colors`}
+                    disabled={isSubmitting}
+                    aria-label="Subscribe">
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <ArrowRight size={20} />
+                    )}
+                  </button>
+                </div>
+
+                {formStatus.message && (
+                  <p
+                    className={`text-sm ${
+                      formStatus.type === "error"
+                        ? "text-red-200"
+                        : "text-green-200"
+                    }`}>
+                    {formStatus.message}
+                  </p>
+                )}
+
+                <p className="text-xs text-white/70">
+                  By subscribing, you agree to our{" "}
+                  <Link href="/privacy" className="underline hover:text-white">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
+              </form>
+            </div>
+
+            {/* Right: Image */}
+            <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full bg-blue-200/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                <div className="absolute inset-0 bg-blue-100/10 rounded-full animate-pulse"></div>
+                <Image
+                  src={delivery}
+                  alt="Join our community"
+                  width={240}
+                  height={280}
+                  className="rounded-lg object-cover z-10 shadow-md"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Decorative Curve */}
-      <div className="w-full overflow-hidden">
+      {/* Wave Separator */}
+      <div className="w-full">
         <svg
-          viewBox="0 0 1440 90"
+          viewBox="0 0 1440 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="block w-full">
-          <path fill="#fff" d="M0,0 C480,90 960,0 1440,90 L1440,120 L0,120 Z" />
+          preserveAspectRatio="none"
+          className="w-full h-16 md:h-24">
+          <path
+            d="M0,56 C240,150 480,0 720,56 C960,112 1200,28 1440,56 L1440,120 L0,120 Z"
+            fill="white"
+          />
         </svg>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-white py-8 px-6 md:px-24">
-        <div className="flex flex-col md:flex-row md:justify-between items-center">
-          {/* Footer Links */}
-          <div className="flex space-x-8 mb-6 md:mb-0">
-            <a href="#" className="text-[#5B8DF6] hover:underline font-medium">
-              About
-            </a>
-            <a href="#" className="text-[#5B8DF6] hover:underline font-medium">
-              Donation
-            </a>
-            <a href="#" className="text-[#5B8DF6] hover:underline font-medium">
-              Blog
-            </a>
-            <a href="#" className="text-[#5B8DF6] hover:underline font-medium">
-              Contact
-            </a>
+      {/* Footer Content */}
+      <footer className="bg-white pt-4 pb-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          {/* Footer Main Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-8">
+            {/* Column 1: About */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-800 mb-4">
+                Our Mission
+              </h3>
+              <p className="text-gray-600 mb-4">
+                We&apos;re dedicated to making a positive impact through
+                community service, education, and sustainable initiatives.
+              </p>
+              <div className="flex space-x-3 mt-4">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.href}
+                    className="bg-blue-100 p-2 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-colors duration-200"
+                    aria-label={social.label}>
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Column 2: Quick Links */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-800 mb-4">
+                Quick Links
+              </h3>
+              <ul className="space-y-2">
+                {footerLinks.slice(0, 3).map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
+                      <span className="text-blue-500">›</span> {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 3: Resources */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-800 mb-4">
+                Resources
+              </h3>
+              <ul className="space-y-2">
+                {footerLinks.slice(3).map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
+                      <span className="text-blue-500">›</span> {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 4: Contact */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-800 mb-4">
+                Contact Us
+              </h3>
+              <address className="not-italic text-gray-600">
+                <p className="mb-2">123 Community Avenue</p>
+                <p className="mb-2">Cityville, ST 12345</p>
+                <p className="mb-2">
+                  <a href="tel:+11234567890" className="hover:text-blue-600">
+                    +1 (123) 456-7890
+                  </a>
+                </p>
+                <p>
+                  <a
+                    href="mailto:info@example.org"
+                    className="hover:text-blue-600">
+                    info@example.org
+                  </a>
+                </p>
+              </address>
+            </div>
           </div>
-          {/* Social Icons */}
-          <div className="flex space-x-4">
-            <a href="#" className="text-blue-500 hover:text-blue-700">
-              <Facebook size={24} />
-            </a>
-            <a href="#" className="text-blue-500 hover:text-blue-700">
-              <Youtube size={24} />
-            </a>
-            <a href="#" className="text-blue-500 hover:text-blue-700">
-              <Twitter size={24} />
-            </a>
-          </div>
-        </div>
-        {/* Footer Bottom */}
-        <div className="mt-8 flex flex-col md:flex-row md:justify-between items-center text-gray-400 text-sm">
-          <div>© 2022 ABC. All rights reserved.</div>
-          <div className="flex space-x-4 mt-2 md:mt-0">
-            <a href="#" className="hover:underline">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:underline">
-              Privacy Policy
-            </a>
+
+          <hr className="border-gray-200" />
+
+          {/* Footer Bottom */}
+          <div className="flex flex-col md:flex-row justify-between items-center py-6 text-gray-500 text-sm">
+            <div className="mb-4 md:mb-0">
+              © {currentYear} Community Organization. All rights reserved.
+            </div>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              <Link
+                href="/terms"
+                className="hover:text-blue-600 transition-colors">
+                Terms of Service
+              </Link>
+              <Link
+                href="/privacy"
+                className="hover:text-blue-600 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link
+                href="/accessibility"
+                className="hover:text-blue-600 transition-colors">
+                Accessibility
+              </Link>
+              <Link
+                href="/sitemap"
+                className="hover:text-blue-600 transition-colors">
+                Sitemap
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

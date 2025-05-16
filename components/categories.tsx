@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import type { StaticImageData } from "next/image";
 import kids from "@/public/kids.png";
 
 const categories = [
@@ -87,22 +88,62 @@ const cards = [
 
 export default function CategoriesSection() {
   const [selected, setSelected] = useState("All");
-  const [donationType, setDonationType] = useState<"one-time" | "weekly">(
-    "one-time"
-  );
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [customAmount, setCustomAmount] = useState<string>("");
+  const [donationType, setDonationType] = useState("one-time");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [customAmount, setCustomAmount] = useState("");
+  const [selectedCard, setSelectedCard] = useState<{
+    id: number;
+    category: string;
+    title: string;
+    image: StaticImageData;
+    progress: number;
+    description: string;
+  } | null>(null);
 
   const predefinedAmounts = [500, 1000, 2000, 5000, 10000, 50000];
+
+  // Prevent scrolling when modal is open
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [modalIsOpen]);
+
+  interface Card {
+    id: number;
+    category: string;
+    title: string;
+    image: StaticImageData;
+    progress: number;
+    description: string;
+  }
+
+  const openModal = (card: Card): void => {
+    setSelectedCard(card);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setCustomAmount("");
+  };
 
   const sendFunds = () => {
     // Logic to send funds
     console.log("Sending funds...");
     console.log("Donation Type:", donationType);
     console.log("Custom Amount:", customAmount);
-    setCustomAmount("");
-    setModalIsOpen(!modalIsOpen);
-    console.log(modalIsOpen);
+    console.log("Selected Card:", selectedCard);
+
+    // Add success message or handling here
+
+    closeModal();
   };
 
   const filteredCards =
@@ -111,7 +152,7 @@ export default function CategoriesSection() {
       : cards.filter((card) => card.category === selected);
 
   return (
-    <section className="w-full bg-white py-12 px-4 ">
+    <section className="w-full bg-white py-12 px-4 relative">
       {/* Header */}
       <div className="max-w-4xl mx-auto text-center text-black">
         <h2 className="text-3xl md:text-4xl font-bold mb-2">
@@ -122,67 +163,10 @@ export default function CategoriesSection() {
           transforms lives.
         </p>
       </div>
+
       {/* Categories Tabs */}
-      <div className="max-w-4xl mx-auto mb-8  relative ">
-        {/* donation modal */}
-
-        {
-          modalIsOpen && <div className="bg-white rounded-[16px] shadow-2xl p-6 max-w-[480px] mx-auto  absolute left-1/3 top-1/4 z-10">
-          <div className="flex space-x-2 bg-gray-100 rounded-full p-1 mb-6 ">
-            <button
-              onClick={() => setDonationType("one-time")}
-              className={`flex-1 py-2 rounded-full text-[14px] cursor-pointer font-semibold transition-all duration-300 ${
-                donationType === "one-time"
-                  ? "bg-[#1A73E8] text-white shadow-md"
-                  : "text-[#344054] hover:bg-gray-200"
-              }`}>
-              One-time
-            </button>
-            <button
-              onClick={() => setDonationType("weekly")}
-              className={`flex-1 py-2 rounded-full text-[14px] cursor-pointer font-semibold transition-all duration-300 ${
-                donationType === "weekly"
-                  ? "bg-[#1A73E8] text-white shadow-md"
-                  : "text-[#344054] hover:bg-gray-200"
-              }`}>
-              Weekly
-            </button>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 mb-4">
-            {predefinedAmounts.map((amount) => (
-              <button
-                key={amount}
-                onClick={() => setCustomAmount(amount.toString())}
-                className={`py-2 rounded-lg text-[14px] font-semibold cursor-pointer transition-all duration-300 ${
-                  customAmount === amount.toString()
-                    ? "bg-[#1A73E8] text-white shadow-md"
-                    : "bg-gray-100 text-[#344054] hover:bg-blue-100 hover:text-[#1A73E8]"
-                }`}>
-                ${amount}
-              </button>
-            ))}
-          </div>
-
-          <input
-            type="text"
-            placeholder="Custom Amount"
-            value={customAmount}
-            onChange={(e) => setCustomAmount(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-[8px] text-[14px] focus:outline-none focus:ring-2 focus:ring-[#1A73E8] focus:border-transparent text-[#1A73E8]"
-          />
-
-          <button
-            className="w-full bg-[#1A73E8] text-white py-3 cursor-pointer mt-4 rounded-[8px] text-[16px] font-semibold hover:bg-[#1660C4] transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
-            onClick={() => sendFunds()}>
-            DONATE NOW
-          </button>
-        </div>
-        }
-
-        {/* donation modal ends  */}
-
-        <div className="flex flex-wrap gap-6 md:gap-10 font-medium items-center">
+      <div className="max-w-4xl mx-auto mb-8 relative">
+        <div className="flex flex-wrap gap-6 md:gap-10 font-medium items-center justify-center">
           {categories.map((cat) => (
             <button
               key={cat.label}
@@ -200,6 +184,7 @@ export default function CategoriesSection() {
           ))}
         </div>
       </div>
+
       {/* Cards */}
       <div className="max-w-6xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {filteredCards.map((card) => (
@@ -223,11 +208,12 @@ export default function CategoriesSection() {
               <h3 className="font-semibold text-gray-900 text-base mt-1 mb-2 leading-tight">
                 {card.title}
               </h3>
+              <p className="text-sm text-gray-600 mb-3">{card.description}</p>
               {/* Progress Bar */}
               <div className="flex items-center gap-2 mb-4">
-                <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
+                <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
                   <div
-                    className="h-1 bg-blue-600 rounded-full"
+                    className="h-2 bg-blue-600 rounded-full transition-all duration-700 ease-in-out"
                     style={{ width: `${card.progress}%` }}
                   />
                 </div>
@@ -236,13 +222,128 @@ export default function CategoriesSection() {
                 </span>
               </div>
               {/* Button */}
-              <button className="w-full cursor-pointer border border-blue-600 text-blue-600 font-medium rounded-full py-2 transition hover:bg-blue-600 hover:text-white" onClick={sendFunds} >
+              <button
+                className="w-full cursor-pointer border border-blue-600 text-blue-600 font-medium rounded-full py-2 transition hover:bg-blue-600 hover:text-white active:scale-95"
+                onClick={() => openModal(card)}>
                 Donate Now
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Modal Backdrop with Blur */}
+      {modalIsOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-blend-color bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={closeModal}>
+          {/* Modal */}
+          <div
+            className="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full mx-auto z-50 transform transition-all duration-300 ease-in-out"
+            onClick={(e) => e.stopPropagation()}>
+            {/* Close button */}
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-900">
+                {selectedCard ? selectedCard.title : "Make a Donation"}
+              </h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-800 transition">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Donation type toggle */}
+            <div className="flex space-x-2 bg-gray-100 rounded-full p-1 mb-6">
+              <button
+                onClick={() => setDonationType("one-time")}
+                className={`flex-1 py-2 rounded-full text-sm cursor-pointer font-semibold transition-all duration-300 ${
+                  donationType === "one-time"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-gray-700 hover:bg-gray-200"
+                }`}>
+                One-time
+              </button>
+              <button
+                onClick={() => setDonationType("weekly")}
+                className={`flex-1 py-2 rounded-full text-sm cursor-pointer font-semibold transition-all duration-300 ${
+                  donationType === "weekly"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-gray-700 hover:bg-gray-200"
+                }`}>
+                Weekly
+              </button>
+            </div>
+
+            {/* Amount options */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              {predefinedAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  onClick={() => setCustomAmount(amount.toString())}
+                  className={`py-3 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 ${
+                    customAmount === amount.toString()
+                      ? "bg-blue-600 text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                  }`}>
+                  ${amount.toLocaleString()}
+                </button>
+              ))}
+            </div>
+
+            {/* Custom amount input */}
+            <div className="relative mb-6">
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+                $
+              </span>
+              <input
+                type="text"
+                placeholder="Custom Amount"
+                value={customAmount}
+                onChange={(e) => setCustomAmount(e.target.value)}
+                className="w-full px-8 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-gray-800"
+              />
+            </div>
+
+            {/* Donate button */}
+            <button
+              className="w-full bg-blue-600 text-white py-3 cursor-pointer rounded-lg text-base font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+              onClick={sendFunds}>
+              DONATE NOW
+            </button>
+
+            {/* Security notice */}
+            <p className="text-xs text-gray-500 text-center mt-4 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
+              </svg>
+              Secure donation processing
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

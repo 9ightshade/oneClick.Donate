@@ -1,69 +1,136 @@
-import React from 'react';
+"use client";
+import React, { useState } from "react";
+import {
+  Heart,
+  DollarSign,
+  Users,
+  ChevronRight,
+  ArrowRight,
+} from "lucide-react";
 
 export default function CharityTemplate() {
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
+  // Card data for easier maintenance and expansion
+  const cards = [
+    {
+      id: "help",
+      title: "Help",
+      description:
+        "At the heart of our mission lies a simple yet powerful belief: that collective generosity, no matter the size, can blossom into extraordinary impact. We are a dedicated platform connecting compassionate individuals like you with vital causes that uplift and empower.",
+      icon: <Heart />,
+      color: "blue",
+      buttonText: "Learn How",
+    },
+    {
+      id: "donate",
+      title: "Donation",
+      description:
+        "From ensuring access to life-saving medicine for vulnerable children to fostering quality education, we strive to support initiatives that create lasting positive change. Your contribution directly impacts lives and creates meaningful change.",
+      icon: <DollarSign />,
+      color: "blue",
+      primary: true,
+      buttonText: "Donate Now",
+    },
+    {
+      id: "volunteer",
+      title: "Volunteer",
+      description:
+        "Volunteering isn't just about giving back; it's about becoming an integral part of the change, connecting with our cause on a deeper level, and witnessing the transformative power of collective action firsthand.",
+      icon: <Users />,
+      color: "blue",
+      buttonText: "Join Us",
+    },
+  ];
+
   return (
-    <div className="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto text-center mb-16">
-        <h1 className="text-3xl font-bold text-gray-800">
+    <div className="bg-gray-50 min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto text-center mb-8 sm:mb-16">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
           Be The <span className="text-blue-500">Change</span>
         </h1>
-        <p className="mt-4 text-gray-500 max-w-xl mx-auto">
-        Planting Seeds of Change, Cultivating a Brighter Future
+        <p className="mt-4 text-gray-500 max-w-xl mx-auto text-sm sm:text-base">
+          Planting Seeds of Change, Cultivating a Brighter Future
         </p>
+        <div className="mt-6">
+          <a
+            href="#donate"
+            className="inline-flex items-center bg-blue-500 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-600 transition-colors">
+            Make a Difference Today
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {/* Help Card */}
-        <div className="bg-white rounded-lg shadow-lg p-8 text-center flex flex-col items-center">
-          <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-            <svg className="w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            id={card.id}
+            className={`rounded-xl shadow-lg overflow-hidden transition-all duration-300 flex flex-col ${
+              card.primary
+                ? "bg-blue-500 transform hover:scale-105 hover:shadow-xl"
+                : "bg-white hover:shadow-xl"
+            } ${hoveredCard === card.id ? "scale-105" : ""}`}
+            onMouseEnter={() => setHoveredCard(card.id)}
+            onMouseLeave={() => setHoveredCard(null)}>
+            <div className="p-6 sm:p-8 flex-grow ">
+              <div
+                className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${
+                  card.primary ? "bg-blue-400" : "bg-blue-50"
+                }`}>
+                <span className={card.primary ? "text-white" : "text-blue-500"}>
+                  {card.icon}
+                </span>
+              </div>
+              <h3
+                className={`text-xl font-semibold mb-3 ${
+                  card.primary ? "text-white" : "text-blue-500"
+                }`}>
+                {card.title}
+              </h3>
+              <p
+                className={`text-sm mb-6 ${
+                  card.primary ? "text-blue-50" : "text-gray-500"
+                }`}>
+                {card.description}
+              </p>
+            </div>
+            <div className="px-6 sm:px-8 pb-6 sm:pb-8">
+              <button
+                className={`w-full inline-flex items-center justify-center rounded-md px-4 cursor-pointer py-2 text-sm font-medium transition-colors ${
+                  card.primary
+                    ? "bg-white text-blue-500 hover:bg-blue-50"
+                    : "border border-blue-500 text-blue-500 hover:bg-blue-50"
+                }`}>
+                {card.buttonText}
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </button>
+            </div>
           </div>
-          <h3 className="text-xl font-semibold text-blue-500 mb-2">Help</h3>
-          <p className="text-gray-500 text-sm mb-6">
-          At the heart of our mission lies a simple yet powerful belief: that collective generosity, no matter the size, can blossom into extraordinary impact. We are a dedicated platform connecting compassionate individuals like you with vital causes that uplift and empower. We believe in transparency, ensuring you see firsthand how your contributions are making a tangible difference in the lives of those who need it most.
-          </p>
-          <button className="mt-auto border border-blue-500 text-blue-500 rounded-md px-4 py-2 text-sm hover:bg-blue-50 transition-colors">
-            Learn More
-          </button>
-        </div>
+        ))}
+      </div>
 
-        {/* Donation Card */}
-        <div className="bg-blue-500 rounded-lg shadow-lg p-8 text-center flex flex-col items-center">
-          <div className="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center mb-4">
-            <svg className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"></path>
-              <rect x="2" y="6" width="20" height="6" rx="2"></rect>
-              <path d="M12 12v6"></path>
-              <path d="M12 3v3"></path>
-              <path d="M7 3h10"></path>
-            </svg>
+      <div className="max-w-3xl mx-auto mt-16 px-4">
+        <div className="bg-white shadow-md rounded-lg p-6 sm:p-8">
+          <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
+            Our Impact
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            {[
+              { number: "120+", label: "Projects" },
+              { number: "15K+", label: "Donors" },
+              { number: "3.2M", label: "Raised" },
+              { number: "45K", label: "Lives Impacted" },
+            ].map((stat, index) => (
+              <div key={index} className="p-3">
+                <p className="text-blue-500 text-2xl font-bold">
+                  {stat.number}
+                </p>
+                <p className="text-gray-500 text-sm">{stat.label}</p>
+              </div>
+            ))}
           </div>
-          <h3 className="text-xl font-semibold text-white mb-2">Donation</h3>
-          <p className="text-blue-100 text-sm mb-6">
-          From ensuring access to life-saving medicine for vulnerable children and fostering quality education to providing safe havens and nourishing meals, we strive to support initiatives that create lasting positive change. Our platform simplifies the giving process, making it easy and secure for you to connect with the causes that resonate with your values. We provide regular updates and heartfelt stories, allowing you to witness the ripple effect of your kindness.
-          </p>
-          <button className="mt-auto border border-white text-white rounded-md px-4 py-2 text-sm hover:bg-blue-400 transition-colors">
-            Learn More
-          </button>
-        </div>
-
-        {/* Volunteer Card */}
-        <div className="bg-white rounded-lg shadow-lg p-8 text-center flex flex-col items-center">
-          <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-            <svg className="w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
-          <h3 className="text-xl font-semibold text-blue-500 mb-2">Volunteer</h3>
-          <p className="text-gray-500 text-sm mb-6">
-          Volunteering isn&apos;t just about giving back; it&apos;s about becoming an integral part of the change, connecting with our cause on a deeper level, and witnessing the transformative power of collective action firsthand. Join our vibrant community of dedicated individuals, discover your unique contribution, and experience the profound fulfillment of making a tangible difference with your time.
-          </p>
-          <button className="mt-auto border border-blue-500 text-blue-500 rounded-md px-4 py-2 text-sm hover:bg-blue-50 transition-colors">
-            Learn More
-          </button>
         </div>
       </div>
     </div>
